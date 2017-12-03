@@ -92,7 +92,7 @@ public class VolumeBean implements Serializable{
 		List<Integer> retVal = new ArrayList<>(data.length());
 		for (String string : array) {
 			try {
-				retVal.add(Integer.valueOf(string));
+				retVal.add(Integer.valueOf(string.trim()));
 			} catch(Exception e) {
 				throw new IllegalArgumentException("The value "+string+" is not valid!");
 			}
