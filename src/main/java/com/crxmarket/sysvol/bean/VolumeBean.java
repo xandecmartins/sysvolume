@@ -81,7 +81,6 @@ public class VolumeBean implements Serializable {
 	public String clear() {
 		data = "";
 		result = null;
-		barModel = new BarChartModel();
 		return "";
 	}
 
