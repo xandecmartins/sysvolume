@@ -76,12 +76,12 @@
 										<limit implementation="org.jacoco.report.check.Limit">
 											<counter>INSTRUCTION</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.45</minimum>
+											<minimum>0.90</minimum>
 										</limit>
 										<limit implementation="org.jacoco.report.check.Limit">
 											<counter>CLASS</counter>
 											<value>MISSEDCOUNT</value>
-											<maximum>2</maximum>
+											<maximum>0</maximum>
 										</limit>
 									</limits>
 								</rule>
