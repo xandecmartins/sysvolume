@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
 import com.crxmarket.sysvol.model.Volume;
