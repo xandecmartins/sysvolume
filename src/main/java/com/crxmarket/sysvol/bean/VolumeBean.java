@@ -46,6 +46,8 @@ public class VolumeBean implements Serializable {
 			        .map(Integer::parseInt)
 			        .collect(Collectors.toList()));
 			updateChart();
+		} catch (NumberFormatException e) {
+			FacesContext.getCurrentInstance().addMessage("Invalid Value", new FacesMessage("The value "+e.getMessage().split(":")[1]+" is not valid!"));
 		} catch (IllegalArgumentException e) {
 			FacesContext.getCurrentInstance().addMessage("Invalid Value", new FacesMessage(e.getMessage()));
 		} catch (Exception e){
@@ -96,16 +98,7 @@ public class VolumeBean implements Serializable {
 		return result;
 	}
 
-	public void setResult(Volume result) {
-		this.result = result;
-	}
-
 	public BarChartModel getBarModel() {
 		return barModel;
 	}
-
-	public void setBarModel(BarChartModel barModel) {
-		this.barModel = barModel;
-	}
-
 }

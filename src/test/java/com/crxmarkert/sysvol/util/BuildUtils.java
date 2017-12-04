@@ -6,7 +6,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class BuildUtils {
 
-	
+	@SuppressWarnings("unchecked")
 	public static Volume buildVolumeWater(){
 		Integer[] array = { 5, 4, 5 };
 		Integer[] arrayw = { 0, 1, 0 };
