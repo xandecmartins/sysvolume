@@ -78,7 +78,7 @@ public class VolumeBean implements Serializable {
 		barModel.setTitle("Volume Analysis After Rain");
 		barModel.setLegendPosition("ne");
 		barModel.setStacked(true);
-		((ChartModel) barModel).setSeriesColors("999999,0000FF");
+		barModel.setSeriesColors("999999,0000FF");
 		Axis xAxis = barModel.getAxis(AxisType.X);
 		xAxis.setLabel("Columns");
 
