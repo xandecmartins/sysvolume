@@ -79,9 +79,7 @@ public class VolumeServiceImpl implements VolumeService {
 			throw new IllegalArgumentException("The input data cannot be empty");
 		}
 			
-		columns.stream().forEach(x -> {
-			if(x<0) throw new IllegalArgumentException("The value "+x+" is not valid");
-		});
+		columns.stream().forEach(x -> { if(x<0) throw new IllegalArgumentException("The value "+x+" is not valid"); });
 	}
 
 }

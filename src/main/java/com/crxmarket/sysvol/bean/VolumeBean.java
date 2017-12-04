@@ -1,8 +1,9 @@
 package com.crxmarket.sysvol.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -36,8 +37,39 @@ public class VolumeBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		barModel = new BarChartModel();
+		configureChart();
+	}
+
+	public String calc() {
+		try {
+			result = volumeService.calcVolume(Stream.of(data.split(","))
+			        .map(Integer::parseInt)
+			        .collect(Collectors.toList()));
+			updateChart();
+		} catch (IllegalArgumentException e) {
+			FacesContext.getCurrentInstance().addMessage("Invalid Value", new FacesMessage(e.getMessage()));
+		}
+		return "";
+	}
+
+	private void updateChart() {
+		AtomicInteger ordinal = new AtomicInteger();
+		
+		ordinal.set(1);
+		ChartSeries stones = new ChartSeries("Stone Colmuns");
+		result.getStoneColumns().stream().forEach(x -> stones.set(ordinal.getAndIncrement(), x));
+		barModel.addSeries(stones);
+		
+		ordinal.set(1);
+		ChartSeries waters = new ChartSeries("Water Colmuns");
+		result.getWaterColumns().stream().forEach(x -> waters.set(ordinal.getAndIncrement(), x));
+		barModel.addSeries(waters);
+	}
+	
+	public void configureChart(){
 		barModel.setTitle("Volume Analysis After Rain");
 		barModel.setLegendPosition("ne");
+		barModel.setStacked(true);
 		((ChartModel) barModel).setSeriesColors("999999,0000FF");
 		Axis xAxis = barModel.getAxis(AxisType.X);
 		xAxis.setLabel("Columns");
@@ -45,55 +77,7 @@ public class VolumeBean implements Serializable {
 		Axis yAxis = barModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Quantity");
 	}
-
-	public String calc() {
-		try {
-			result = volumeService.calcVolume(getValues());
-		} catch (IllegalArgumentException e) {
-			FacesContext.getCurrentInstance().addMessage("Invalid Value", new FacesMessage(e.getMessage()));
-			return "";
-		}
-
-		updateChart(result);
-			
-		return "";
-	}
-
-	private void updateChart(Volume result) {
-		ChartSeries stones = new ChartSeries("Stone Colmuns");
-
-		int i = 1;
-		for (Integer stone : result.getStoneColumns()) {
-			stones.set(i++, stone);
-		}
-		barModel.addSeries(stones);
-
-		ChartSeries waters = new ChartSeries("Water Colmuns");
-
-		i = 1;
-		for (Integer stone : result.getWaterColumns()) {
-			waters.set(i++, stone);
-		}
-
-		barModel.addSeries(waters);
-
-		barModel.setStacked(true);
-
-	}
-
-	private List<Integer> getValues() {
-		String[] array = data.split(",");
-		List<Integer> retVal = new ArrayList<>(data.length());
-		for (String string : array) {
-			try {
-				retVal.add(Integer.valueOf(string.trim()));
-			} catch (Exception e) {
-				throw new IllegalArgumentException("The value " + string + " is not valid!");
-			}
-		}
-		return retVal;
-	}
-
+	
 	public String clear() {
 		data = "";
 		result = null;
