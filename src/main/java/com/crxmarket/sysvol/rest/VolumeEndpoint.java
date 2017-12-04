@@ -12,16 +12,26 @@ import javax.ws.rs.QueryParam;
 
 import com.crxmarket.sysvol.service.VolumeService;
 
-@Path("/rest/volume")
-@Produces("application/json")
+@Path("/rest")
 public class VolumeEndpoint {
 
 	@Inject
-    VolumeService volumeService;
+    private VolumeService volumeService;
 	
 	@GET
-	@Path("/")
+	@Path("/volume")
+	@Produces("application/json")
 	public Response calcVolume(@QueryParam("ids") List<Integer> ids) {
 		return Response.ok(volumeService.calcVolume(ids)).build();
 	}
+
+	public VolumeService getVolumeService() {
+		return volumeService;
+	}
+
+	public void setVolumeService(VolumeService volumeService) {
+		this.volumeService = volumeService;
+	}
+	
+	
 }
