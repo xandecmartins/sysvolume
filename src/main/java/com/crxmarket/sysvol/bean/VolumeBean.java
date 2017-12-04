@@ -40,7 +40,7 @@ public class VolumeBean implements Serializable {
 		configureChart();
 	}
 
-	public String calc() {
+	public void calc() {
 		try {
 			result = volumeService.calcVolume(Stream.of(data.split(","))
 			        .map(Integer::parseInt)
@@ -48,8 +48,14 @@ public class VolumeBean implements Serializable {
 			updateChart();
 		} catch (IllegalArgumentException e) {
 			FacesContext.getCurrentInstance().addMessage("Invalid Value", new FacesMessage(e.getMessage()));
+		} catch (Exception e){
+			FacesContext.getCurrentInstance().addMessage("Error", new FacesMessage(e.getMessage()));
 		}
-		return "";
+	}
+	
+	public void clear() {
+		data = "";
+		result = null;
 	}
 
 	private void updateChart() {
@@ -78,12 +84,6 @@ public class VolumeBean implements Serializable {
 		yAxis.setLabel("Quantity");
 	}
 	
-	public String clear() {
-		data = "";
-		result = null;
-		return "";
-	}
-
 	public String getData() {
 		return data;
 	}

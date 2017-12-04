@@ -18,6 +18,7 @@ public class VolumeServiceImpl implements VolumeService {
 		retVal.setStoneColumns(columns);
 
 		List<Integer> water = new ArrayList<>(columns.size());
+		
 		int[] maxArray = generateMaxArrayRightToLeft(columns);
 
 		water.add(0);
