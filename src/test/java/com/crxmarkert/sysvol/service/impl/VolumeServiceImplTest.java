@@ -26,8 +26,20 @@ public class VolumeServiceImplTest {
 	}
 	
 	@Test
-	public void testSucessWithWaterWithWhiteSpace() {
+	public void testSucessWithWaterWithWhiteSpaceBetween() {
 		Volume vol = volumeService.calcVolume("5 , 4, 5");
+		assertEquals(new Integer(1),vol.getTotalValue());
+	}
+	
+	@Test
+	public void testSucessWithWaterWithWhiteSpaceBeforeAfter() {
+		Volume vol = volumeService.calcVolume(" 5,4,5 ");
+		assertEquals(new Integer(1),vol.getTotalValue());
+	}
+	
+	@Test
+	public void testSucessWithWaterWithWhiteSpace() {
+		Volume vol = volumeService.calcVolume(" 5 , 4 , 5 ");
 		assertEquals(new Integer(1),vol.getTotalValue());
 	}
 	
@@ -55,6 +67,11 @@ public class VolumeServiceImplTest {
 	
 	@Test(expected = ColumnInvalidException.class)
 	public void testFailEmpty() {
+		volumeService.calcVolume("");
+	}
+	
+	@Test(expected = ColumnInvalidException.class)
+	public void testFailWhiteSpace() {
 		volumeService.calcVolume("");
 	}
 	
