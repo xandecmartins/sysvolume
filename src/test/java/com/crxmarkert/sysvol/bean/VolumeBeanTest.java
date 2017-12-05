@@ -6,11 +6,9 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -26,6 +24,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.crxmarkert.sysvol.util.BuildUtils;
 import com.crxmarkert.sysvol.util.ContextMocker;
 import com.crxmarket.sysvol.bean.VolumeBean;
+import com.crxmarket.sysvol.exception.ColumnInvalidException;
 import com.crxmarket.sysvol.service.VolumeService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,23 +41,21 @@ public class VolumeBeanTest {
 		bean.init();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testCalcOK() {
-		when(volumeService.calcVolume(any(List.class))).thenReturn(
+		when(volumeService.calcVolume(any(String.class))).thenReturn(
 				BuildUtils.buildVolumeWater());
 		bean.setData("5,4,5");
 		bean.calc();
-		verify(volumeService).calcVolume(any(List.class));
+		verify(volumeService).calcVolume(any(String.class));
 		assertEquals(bean.getResult().getTotalValue(), BuildUtils
 				.buildVolumeWater().getTotalValue());
 		assertNotNull(bean.getBarModel());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testClearOK() {
-		when(volumeService.calcVolume(any(List.class))).thenReturn(
+		when(volumeService.calcVolume(any(String.class))).thenReturn(
 				BuildUtils.buildVolumeWater());
 		bean.setData("5,4,5");
 		bean.calc();
@@ -68,7 +65,6 @@ public class VolumeBeanTest {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testExceptionNumberFormat() {
 		FacesContext context = ContextMocker.mockFacesContext();
@@ -78,8 +74,7 @@ public class VolumeBeanTest {
 			when(ext.getSessionMap()).thenReturn(session);
 			when(context.getExternalContext()).thenReturn(ext);
 
-			doThrow(new NumberFormatException("For input string: a")).when(
-					volumeService).calcVolume(any(List.class));
+			when(volumeService.calcVolume(any(String.class))).thenThrow(new ColumnInvalidException("The value a is not valid"));
 			bean.setData("5,4,a");
 			bean.calc();
 		} finally {
@@ -88,7 +83,6 @@ public class VolumeBeanTest {
 
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testExceptionEmpty() {
 		FacesContext context = ContextMocker.mockFacesContext();
@@ -98,8 +92,7 @@ public class VolumeBeanTest {
 			when(ext.getSessionMap()).thenReturn(session);
 			when(context.getExternalContext()).thenReturn(ext);
 
-			doThrow(new IllegalArgumentException()).when(
-					volumeService).calcVolume(any(List.class));
+			when(volumeService.calcVolume(any(String.class))).thenThrow(new ColumnInvalidException("The value a is not valid"));
 			bean.setData("5,4,a");
 			bean.calc();
 		} finally {

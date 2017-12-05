@@ -24,7 +24,7 @@ public class VolumeTest {
 	public void testSucessWithWater() {
 		Integer[] array = { 5, 4, 5 };
 		Integer[] arrayWater = { 0, 1, 0 };
-		Volume vol = volumeService.calcVolume(Arrays.asList(array));
+		Volume vol = volumeService.calcVolume("5, 4, 5");
 		assertEquals(new Integer(1),vol.getTotalValue());
 		assertEquals(Arrays.asList(array),vol.getStoneColumns());
 		assertEquals(Arrays.asList(arrayWater),vol.getWaterColumns());

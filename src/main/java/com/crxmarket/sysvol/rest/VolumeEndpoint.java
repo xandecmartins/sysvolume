@@ -1,8 +1,6 @@
 package com.crxmarket.sysvol.rest;
 
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -21,17 +19,7 @@ public class VolumeEndpoint {
 	@GET
 	@Path("/volume")
 	@Produces("application/json")
-	public Response calcVolume(@QueryParam("ids") List<Integer> ids) {
+	public Response calcVolume(@QueryParam("ids") String ids) {
 		return Response.ok(volumeService.calcVolume(ids)).build();
 	}
-
-	public VolumeService getVolumeService() {
-		return volumeService;
-	}
-
-	public void setVolumeService(VolumeService volumeService) {
-		this.volumeService = volumeService;
-	}
-	
-	
 }
