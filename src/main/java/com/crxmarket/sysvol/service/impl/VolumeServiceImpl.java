@@ -88,7 +88,7 @@ public class VolumeServiceImpl implements VolumeService {
 	private List<Integer> evaluateAndConvertInput(String data) {
 		if (data == null || data.trim().isEmpty()) {
 			throw new ColumnInvalidException(
-					"The list os columns cannot be empty");
+					"The list of columns cannot be empty");
 		}
 
 		List<Integer> columns = null;

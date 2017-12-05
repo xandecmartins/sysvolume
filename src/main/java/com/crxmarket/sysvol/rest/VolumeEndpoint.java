@@ -19,7 +19,7 @@ public class VolumeEndpoint {
 	@GET
 	@Path("/volume")
 	@Produces("application/json")
-	public Response calcVolume(@QueryParam("ids") String ids) {
-		return Response.ok(volumeService.calcVolume(ids)).build();
+	public Response calcVolume(@QueryParam("columns") String columns) {
+		return Response.ok(volumeService.calcVolume(columns)).build();
 	}
 }

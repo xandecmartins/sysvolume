@@ -10,12 +10,12 @@
     * WildFly Swarm 2017.11.0
     * Java 8
     * JSF / PrimeFaces
-    * Junit / JaCoCo
+    * Junit / Mockito / JaCoCo
     
     
 ## Test Structure
 ## Unit Test & Coverage
-	It was defined, using JaCoCo plugin
+	It was defined the threshold in 90% of coverage, using JaCoCo plugin (currently the coverage is 100%)
 ### How to Generate Cover Report
     mvn clean test jacoco:report
     firefox target/site/jacoco/index.html
@@ -32,6 +32,9 @@
 	
 	The package will be available for deploy in target/VolumeSystem.war
 	
-	Also, the package is deployed on Heroku and can be accessed using the link http://sysvolume.herokuapp.com/faces/index.xhtml
+	Also, the package is deployed on Heroku and can be accessed 
+	using the link http://sysvolume.herokuapp.com/faces/index.xhtml
 
-	For the rest service, it could be accessed by the URL http://sysvolume.herokuapp.com/rest/volume?ids=6&ids=5&ids=6 or using localhost with the same url.
+	For the rest service, it could be 
+	accessed by the URL 
+	http://sysvolume.herokuapp.com/rest/volume?columns=6,5,6 or using localhost with the same url.
