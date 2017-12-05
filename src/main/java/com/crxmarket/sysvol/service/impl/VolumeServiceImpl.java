@@ -93,7 +93,7 @@ public class VolumeServiceImpl implements VolumeService {
 
 		List<Integer> columns = null;
 		try {
-			columns = Stream.of(data.split("\\s*,\\s*")).map(Integer::parseInt)
+			columns = Stream.of(data.trim().split("\\s*,\\s*")).map(Integer::parseInt)
 					.collect(Collectors.toList());
 
 			columns.stream().forEach(
